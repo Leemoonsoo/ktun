@@ -1,0 +1,25 @@
+{
+  "name": "@zarvis/kude-tun",
+  "version": "0.0.1",
+  "description": "Reverse http tunnel for KUDE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@mdslab/wstun": "^1.0.7",
+    "commander": "^2.18.0",
+    "get-port": "^4.0.0",
+    "http-proxy": "^1.17.0",
+    "log4js": "^3.0.5"
+  },
+  "author": "Edwin Zarvis <edwin@zarvis.ai>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zarvis-ai/kude-tun.git"
+  },
+  "bin": {
+    "kude-tun": "./index.js"
+  }
+}
