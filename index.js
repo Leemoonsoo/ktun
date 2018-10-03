@@ -52,8 +52,8 @@ function createServer(config) {
           var m = /[/]_ktun[/]([^/]+)(.*)/.exec(req.url)
           token = m[1]
           req.url = m[2]
-      } else if (req.headers && req.headers['X-Ktun-Token']) {
-          token = req.headers['X-Ktun-Token']
+      } else if (req.headers && req.headers['x-ktun-token']) {
+          token = req.headers['x-ktun-token']
       } else if (req.host && req.host.startsWith("tun-")) {
           var m = /tun-([^-.]+).*/.exec(req.host)
           token = m[1]
