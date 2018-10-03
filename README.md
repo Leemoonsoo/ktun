@@ -26,7 +26,7 @@ kude-tun -p 8080
 If public domain name of tunnel server is `ktun.example.com`, kude-tun client can connect the server to reverse proxy service behind firewall.
 
 ```
-kude-tun -t mysecrettoken -r localhost:7777 -s ws://ktun.example.com/_ktuncreate
+kude-tun -t mysecrettoken -r localhost:7777 -s ws://ktun.example.com
 ```
 
 kude-tun client request a new tunnel to server (with secret token 'mysecrettoken'), and reverse proxy request from server to service behind firewall `localhost:7777`.

@@ -24,14 +24,14 @@ var program = require('commander');
 program
   .version('0.1.0')
   .option('-p, --port [number]', '(server mode) Tunnel server port to listen')
-  .option('-s, --server [url]', '(client mode) Tunnel server address to connect. e.g. ws://proxyserverhost:8080/_ktuncreate')
+  .option('-s, --server [url]', '(client mode) Tunnel server address to connect. e.g. ws://proxyserverhost:8080')
   .option('-t, --tunnel [name]', '(client mode) Tunnel name to create. [a-z0-9]*. Tunnel name should be unique')
   .option('-r, --proxy [host:port]', '(client mode) Proxy target host:port. e.g. (localhost:8888)')
   .parse(process.argv);
 
 if (program.port) {
   getPort().then(function(tport) {
-    logger.info("Start server on ", program.port)
+    logger.info("Start server on", program.port)
     createServer({
       proxyPort: program.port,
       tunnelServerPort: tport
@@ -39,7 +39,7 @@ if (program.port) {
   })
 } else if (program.server && program.tunnel && program.proxy) {
   const client = new wstun.client_reverse;
-  client.start(program.tunnel, program.server, program.proxy);
+  client.start(program.tunnel, program.server + "/_ktuncreate", program.proxy);
   logger.info("Starting tunnel", program.proxy)
 } else {
   program.help()
