@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 log4js = require('log4js');
 var http = require('http'),
     httpProxy = require('http-proxy'),
