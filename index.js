@@ -81,8 +81,15 @@ function createServer(config) {
       logger.info("Proxy request to tunnel", token, req.url)
       proxy.web(req, res, { target: 'http://localhost:' + tunnelMap[token].port });
     } else {
-      // error
-      logger.warn("Can't proxy request. tunnel not found", token, req.url)
+      if (req.url == "/_health") {
+        res.writeHead(200)
+        res.end();
+      } else {
+        // error
+        res.writeHead(404)
+        res.end();
+        logger.warn("Can't proxy request. tunnel not found", token, req.url)
+      }
     }
   });
   //
