@@ -50,13 +50,17 @@ function createServer(config) {
       var token = undefined
       if (req.url && req.url.startsWith("/_ktun/")) {
           var m = /[/]_ktun[/]([^/]+)(.*)/.exec(req.url)
-          token = m[1]
-          req.url = m[2]
+          if (m && m.length > 1) {
+            token = m[1]
+            req.url = m[2]
+          }
       } else if (req.headers && req.headers['x-ktun-token']) {
           token = req.headers['x-ktun-token']
       } else if (req.host && req.host.startsWith("tun-")) {
           var m = /tun-([^-.]+).*/.exec(req.host)
-          token = m[1]
+          if (m && m.length > 0) {
+            token = m[1]
+          }
       }
       return token    
   }
@@ -99,16 +103,23 @@ function createServer(config) {
   proxyServer.on('upgrade', function (req, socket, head) {
     if (req.url.startsWith("/_ktuncreate/?dst=")) {
       var m = /([^?]+[?]dst=)([^:]+)[:](.*)/.exec(req.url)
-      var token = m[3]
-      if (tunnelMap[token]) {
-        // token already exists
-        // error
+      if (m && m.length > 2) {
+        var token = m[3]
+        if (tunnelMap[token]) {
+          // token already exists
+          // error
+          logger.error("Token already exists", token)
+          return
+        }
+      } else {
+        logger.error("invalid dest format")
         return
       }
       getPort().then(function(port) {
         if (tunnelMap[token] || Object.keys(tunnelMap).find((k) => tunnelMap[k].port == port)) {
           // token or port already in the map
           // error
+          logger.error("Token or port already exists", token, port)
           return
         } else {
           tunnelMap[token] = {
@@ -150,10 +161,15 @@ function createServer(config) {
   });
 
   proxy.on('error', function (err, req, res) {
-    const token = resolveTokenFromRequest(req)
-    delete tunnelMap[token]
-    logger.error('Tunnel close', token)
-    logger.trace('Connection error', err)
+    if (req.url.startsWith("/_ktuncreate/?dst=")) {
+      var m = /([^?]+[?]dst=)([^:]+)[:](.*)/.exec(req.url)
+      const token = m[3]
+      delete tunnelMap[token]
+      logger.info('Tunnel disconnect', token)
+      logger.trace('Connection error', err)
+    } else {
+      // okay to not handle proxy request error
+    }
   });
 
   proxyServer.listen(config.proxyPort);
