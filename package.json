@@ -1,6 +1,6 @@
 {
   "name": "@zarvis/kude-tun",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "Reverse http tunnel over websocket",
   "main": "index.js",
   "scripts": {

@@ -150,7 +150,10 @@ function createServer(config) {
   });
 
   proxy.on('error', function (err, req, res) {
-    logger.error('connection error', err)
+    const token = resolveTokenFromRequest(req)
+    delete tunnelMap[token]
+    logger.error('Tunnel close', token)
+    logger.trace('Connection error', err)
   });
 
   proxyServer.listen(config.proxyPort);
