@@ -49,3 +49,4 @@ http request to `http://wstun.example.com/_ktun/mysecrettoken/` will be forwarde
 ```
 
 This connection mechanism is inspired by [wstunnel](https://github.com/rightscale/wstunnel). However, [wstunnel](https://github.com/rightscale/wstunnel) does not handle websocket request. This project uses [wstun](https://github.com/MDSLab/wstun) to create tcp tunnel over websocket and [node-http-proxy](https://github.com/nodejitsu/node-http-proxy) to reverse proxy request. And it handles websocket connection smoothly.
+
