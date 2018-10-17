@@ -65,7 +65,7 @@ function createServer(config) {
       return token    
   }
 
-  var proxy = httpProxy.createProxyServer({ws: true})
+  var proxy = httpProxy.createProxyServer({ws: true, proxyTimeout: 2000})
 
   /**
    * Key is token
@@ -83,7 +83,19 @@ function createServer(config) {
     const token = resolveTokenFromRequest(req)
     if (token && tunnelMap[token]) {
       logger.info("Proxy request to tunnel", token, req.url)
-      proxy.web(req, res, { target: 'http://localhost:' + tunnelMap[token].port });
+      proxy.web(req, res, { target: 'http://localhost:' + tunnelMap[token].port }, function(err) {
+        if (req.url.startsWith("/_ktuncreate/?dst=")) {
+          var m = /([^?]+[?]dst=)([^:]+)[:](.*)/.exec(req.url)
+          const token = m[3]
+          delete tunnelMap[token]
+          logger.info('Tunnel disconnect', token)
+          logger.trace('Connection error', err)
+        } else {
+          // retry on error
+          logger.warn("Retry proxy request to tunnel", token, req.url)
+          proxy.web(req, res, { target: 'http://localhost:' + tunnelMap[token].port })
+        }
+      });
     } else {
       if (req.url == "/_health") {
         res.writeHead(200)
@@ -169,7 +181,21 @@ function createServer(config) {
       logger.trace('Connection error', err)
     } else {
       // okay to not handle proxy request error
+      logger.error("Proxy error", err)
+      if (res.writeHead) {
+        res.writeHead(500)
+      }
+      res.end();
     }
+  });
+
+  proxy.on('proxyReq', function (proxyReq, req, res, options) {
+    logger.trace('Proxy Request', req.url);
+  });
+
+
+  proxy.on('proxyRes', function (proxyRes, req, res) {
+    logger.trace('Proxy Response', req.url);
   });
 
   proxyServer.listen(config.proxyPort);
