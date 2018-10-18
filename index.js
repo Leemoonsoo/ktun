@@ -322,3 +322,8 @@ function patch_wstun() {
 
   wstun.client_reverse = wst_client_reverse
 }
+
+process.on( "SIGTERM", function() {
+  logger.info('SIGTERM received');
+  process.exit();
+});

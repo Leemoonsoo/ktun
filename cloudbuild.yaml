@@ -20,5 +20,5 @@ steps:
     [[ "$BRANCH_NAME" == "master" ]] && docker pull ${_GCR_REGISTRY}/kude-tun:${_KUDETUN_IMAGE_VER} || docker tag ${_GCR_REGISTRY}/kude-tun:${COMMIT_SHA} ${_GCR_REGISTRY}/kude-tun:${_KUDETUN_IMAGE_VER} && docker push ${_GCR_REGISTRY}/kude-tun:${_KUDETUN_IMAGE_VER} && docker push ${_GCR_REGISTRY}/kude-tun:${COMMIT_SHA}
 
 substitutions:
-  _KUDETUN_IMAGE_VER: 0.0.9
+  _KUDETUN_IMAGE_VER: 0.1.0
   _GCR_REGISTRY: gcr.io/zarvis-2018
