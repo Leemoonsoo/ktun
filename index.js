@@ -233,7 +233,7 @@ function patch_wstun() {
 
     var proto = wsHostUrl.split(":")[0];
     if(proto == "wss")
-      require("../lib/https_override");
+      require("@mdslab/wstun/lib/https_override");
 
     url = "" + wsHostUrl + "/?dst=" + urlWsHostObj.hostname+":"+portTunnel;
 
@@ -260,7 +260,12 @@ function patch_wstun() {
             //Identification of ID connection
             var idConnection = parsing[1];
 
-            this.wsClientData = new WebSocketClient();
+            this.wsClientData = new WebSocketClient({
+              keepalive: true,
+              keepaliveInterval: 5000, // 5sec
+              dropConnectionOnKeepaliveTimeout: true,
+              keepaliveGracePeriod: 11000 // 11 sec
+            });
             this.wsClientData.connect(wsHostUrl+"/?id="+idConnection, 'tunnel-protocol');
 
             //Management of new WS Client for every TCP connection on WS Server
