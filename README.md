@@ -1,6 +1,6 @@
-# kude-tun
+# ktun
 
-kude-tun establishes http reverse tunnels over WebScoket connections for circumventing the problem of directly connect to hosts behind a strict firewall or without public IP
+ktun establishes http reverse tunnels over WebScoket connections for circumventing the problem of directly connect to hosts behind a strict firewall or without public IP
 
 - Reverse http tunnel over websocket
 - Expose service running behind firewall with access token
@@ -9,7 +9,7 @@ kude-tun establishes http reverse tunnels over WebScoket connections for circumv
 ## Installation
 
 ```
-npm install @zarvis/kude-tun
+npm install @leemoonsoo/ktun
 ```
 
 ## Usage
@@ -19,17 +19,17 @@ npm install @zarvis/kude-tun
 Start a tunnel server (on port 8080), on publicly accessible host.
 
 ```
-kude-tun -p 8080
+ktun -p 8080
 ```
 
 ### Start tunnel
-If public domain name of tunnel server is `ktun.example.com`, kude-tun client can connect the server to reverse proxy service behind firewall.
+If public domain name of tunnel server is `ktun.example.com`, ktun client can connect the server to reverse proxy service behind firewall.
 
 ```
-kude-tun -t mysecrettoken -r localhost:7777 -s ws://ktun.example.com
+ktun -t mysecrettoken -r localhost:7777 -s ws://ktun.example.com
 ```
 
-kude-tun client request a new tunnel to server (with secret token 'mysecrettoken'), and reverse proxy request from server to service behind firewall `localhost:7777`.
+ktun client request a new tunnel to server (with secret token 'mysecrettoken'), and reverse proxy request from server to service behind firewall `localhost:7777`.
 
 ### Make a request through the tunnel
 
@@ -44,7 +44,7 @@ http request to `http://wstun.example.com/_ktun/mysecrettoken/` will be forwarde
       HTTP-client ==>\     ||firewall||     /===> HTTP-server
                      |                      | (localhost:7777)
                      \----------------------/
-                Kude-tun  <===tunnel==== Kude-tun
+                Ktun     <===tunnel====    Ktun
           (tunnel-server.com)            (client)
 ```
 

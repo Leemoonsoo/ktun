@@ -1,5 +1,5 @@
 {
-  "name": "@zarvis/kude-tun",
+  "name": "@leemoonsoo/ktun",
   "version": "0.1.0",
   "description": "Reverse http tunnel over websocket",
   "main": "index.js",
@@ -13,13 +13,13 @@
     "http-proxy": "^1.17.0",
     "log4js": "^3.0.5"
   },
-  "author": "Edwin Zarvis <edwin@zarvis.ai>",
+  "author": "Lee moon soo <leemoonsoo@gmail.com>",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zarvis-ai/kude-tun.git"
+    "url": "git+https://github.com/Leemoonsoo/ktun.git"
   },
   "bin": {
-    "kude-tun": "./index.js"
+    "ktun": "./index.js"
   }
 }
