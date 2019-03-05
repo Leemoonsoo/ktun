@@ -6,14 +6,9 @@ ktun establishes http reverse tunnels over WebScoket connections for circumventi
 - Expose service running behind firewall with access token
 - Http request 
 
-## Installation
-
-```
-npm install @leemoonsoo/ktun
-```
-
 ## Usage
 
+Use docker image `moon/ktun:<version>`
 
 ### Setup tunnel server
 Start a tunnel server (on port 8080), on publicly accessible host.

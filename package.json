@@ -1,6 +1,6 @@
 {
   "name": "@leemoonsoo/ktun",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Reverse http tunnel over websocket",
   "main": "index.js",
   "scripts": {
