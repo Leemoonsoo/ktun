@@ -100,7 +100,7 @@ function createServer(config) {
         }
       });
     } else {
-      if (req.url == "/_health") {
+      if (req.url == "/_health" || req.url == "/") {
         res.writeHead(200)
         res.end();
       } else {
